@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import p_register from '../views/Product/p_register.vue'
 import purchaseitem from '../views/Purchase/purchaseItem.vue'
 import saleitem from '../views/Sale/saleItem.vue'
+import supplier from '../views/Purchase/supplier.vue'
 const routes = [
   // {
   //   path: '/',
@@ -10,10 +11,17 @@ const routes = [
   //   component: HomeView
   // },
     {
+    path: '/supp_regist',
+    name: 'supplier',
+    component: supplier
+  },
+  {
     path: '/a',
     name: 'p_register',
     component: p_register
   },
+
+  
   {
     path: '/saleitem',
     name: 'saleitem',

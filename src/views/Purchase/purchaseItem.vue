@@ -2,13 +2,13 @@
     <div>
         <section>
             <div class="row gx-0">
-                <div class="col-md-4">
+                <div class="col-sm-5">
                     <div class="row gx-0">
                         <div class="col-md-4">
                             <label for="">Search</label>
                         </div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" v-model="search" @change="searcher()">
+                            <input type="text" class="form-control" v-model="search" @keyup="searcher()">
                             <ul class="list-group " style="max-height:150px; overflow:scroll">
                                 <li class="list-group-item"  v-for="(sdata,index) in showproduct2" v-bind:key = "sdata.id" :id="sdata.id" @click="selectitem(index)">
                                   B={{sdata.Brand}}/
@@ -43,15 +43,21 @@
                            <label for="">Purchase Price : </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="number" class="form-control" id="pprice"  v-model="pprice">
+                            <input type="number" class="form-control" id="pprice"  @keyup="calpercentage();setpercentage() "  @change="calpercentage();setpercentage()"  v-model="pprice">
                         </div>
                     </div>
                     <div class="row gx-0 mb-3">
-                        <div class="col-md-4">
+                        <div class="col-sm-4">
                            <label for="">Sell Price : </label>
                         </div>
-                        <div class="col-md-8">
-                            <input type="number" class="form-control" id="sprice"  v-model="sprice">
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control" id="sprice" @keyup="setpercentage()" @change="setpercentage()" v-model="sprice">
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" id="percentage"  @keyup="calpercentage()" @change="calpercentage()"  v-model="percentage">
+                        </div>
+                        <div class="col-sm-1">
+                           <h3>%</h3>
                         </div>
                     </div>
                     <div class="row gx-0 mb-3">
@@ -86,7 +92,7 @@
                     </div>
                
                 </div>
-                <div class="col-md-8">
+                <div class="col-sm-7">
                     <div class="row  card p-3 m-2 me-4 mb-3 shadow  bg-body rounded">
                         <div class="col-md-12">
                             <div class="row ">
@@ -117,8 +123,8 @@
                     
                     </div>
                     <div class="row card p-3 m-2 me-4 shadow  bg-body rounded">
-                        <div class="col-md-12">
-                            <table class="table table-bordered">
+                        <div class="col-md-12 overflow-scroll">
+                            <table class="table table-bordered ">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -246,6 +252,7 @@ export default {
             totalprice:"",
             search:"",
             pid:'',
+            percentage:'',
 
 
 
@@ -253,6 +260,23 @@ export default {
 
     },
     methods: {
+        setpercentage()
+        {
+            if(this.sprice!="" && this.pprice!="")
+            {
+            let value=parseInt(this.sprice)-parseInt(this.pprice);
+            this.percentage=parseFloat(value/this.pprice*100);
+            }
+        
+        },
+        calpercentage() {
+            if(this.pprice!="")
+            {
+                let saleprice=0;
+            saleprice= parseInt(this.pprice) +parseInt((this.pprice/100)*this.percentage);
+            this.sprice=saleprice;
+            }
+        },
         caltotalprice()
         {
             let totalprc=0;
@@ -369,8 +393,7 @@ export default {
        
  
             this.caltotalprice()
- 
-
+          
         },
         removeproduct(idas)
         {
@@ -388,6 +411,7 @@ export default {
          this.mtype=this.purchaseList[id].mtype;
           this.desc=this.purchaseList[id].desc;
           this.btnproduct="Update"
+          this.setpercentage()
         },
         selectitem(id)
         {
@@ -403,6 +427,13 @@ export default {
 
                 }
                 this.showproduct2=[]
+                this.pid= this.selectedproduct.id
+            this.name=  this.selectedproduct.name
+            this.pprice=this.selectedproduct.pprice
+            this.sprice=this.selectedproduct.sprice
+      
+            this.mtype=this.selectedproduct.mtype
+            this.setpercentage()
             
         },
         searcher()
@@ -437,7 +468,8 @@ export default {
             this.sprice=this.selectedproduct.sprice
       
             this.mtype=this.selectedproduct.mtype
-           
+            this.setpercentage()
+
         },
         printvoucher()
 {
