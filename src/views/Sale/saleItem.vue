@@ -2,7 +2,7 @@
     <div>
         <section>
             <div class="row gx-0">
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <div class="row gx-0">
                         <div class="col-md-4">
                             <label for="">Search</label>
@@ -86,7 +86,7 @@
                     </div>
                
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <div class="row  card p-3 m-2 me-4 mb-3 shadow  bg-body rounded">
                         <div class="col-md-12">
                             <div class="row ">
@@ -111,7 +111,7 @@
                     
                     </div>
                     <div class="row card p-3 m-2 me-4 shadow  bg-body rounded">
-                        <div class="col-md-12">
+                        <div class="col-md-12 overflow-scroll">
                             <table class="table table-bordered">
                             <thead>
                                 <tr>
